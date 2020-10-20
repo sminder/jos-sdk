@@ -20,7 +20,7 @@
   ],
   "dependencies": {
     "lodash": "^4.17.15",
-    "moment-timezone": "^0.5.26",
+    "moment": "^2.29.1",
     "querystring": "^0.2.0",
     "superagent": "^5.1.0"
   },

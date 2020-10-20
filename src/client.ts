@@ -11,6 +11,10 @@ const defaultConfig = {
 }
 
 const jdAPI = {
+  goodsSearch: {
+    method: 'jd.kpl.open.xuanpin.searchgoods',
+    version: '1.0'
+  },
   goodsInfo: {
     method: 'jd.union.open.goods.promotiongoodsinfo.query',
     version: '1.0'
@@ -115,6 +119,19 @@ export class JDClient {
     this.accessToken = accessToken
     this.format = format
     this.v = v
+  }
+
+    /**
+   * 根据sku获取产品数据
+   * @param skuIds
+   */
+  public async searchGoods(keywords: string, pageSize: number=20) {
+    const params = {
+      queryParam: {keywords},
+      pageParam: {pageSize},
+      orderField: 0,
+    }
+    return await this.handleAPI(jdAPI.goodsSearch, params) || []
   }
 
   /**
@@ -246,7 +263,12 @@ export class JDClient {
       if (parsedJson.error_response) {
         console.error(parsedJson.error_response)
       }
-      returnResult = JSON.parse(parsedJson[responseParser]['result'])['data']
+      const result = parsedJson[responseParser]['result'];
+      if (typeof result  === 'string') {
+        returnResult = JSON.parse(result)['data']
+      } else {
+        returnResult = result;
+      }
     } catch (e) {
       console.error(e)
       throw new Error(`解析京东api数据出现错误，详情请查看log！${e}`)

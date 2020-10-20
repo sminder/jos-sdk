@@ -2,7 +2,7 @@
  * Created by leoliew on 2016/11/1.
  */
 
-import * as Moment from 'moment-timezone'
+import * as moment from 'moment'
 
 export namespace Utils {
   /**
@@ -43,8 +43,7 @@ export namespace Utils {
    * @return {Object} the Moment object
    */
   export function getCurrentMoment (time?) {
-    Moment.tz.setDefault('Asia/Shanghai')
-    return new Moment(time)
+    return moment(time)
   }
 
   /**
